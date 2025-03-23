@@ -1,0 +1,72 @@
+import java.awt.*;
+import java.awt.event.*;
+
+public class EmployeeForm extends Frame implements ActionListener {
+    Label nameLabel, empIdLabel, deptLabel, resultLabel;
+    
+    TextField nameField, empIdField, deptField;
+    
+    Button submitButton;
+
+    EmployeeForm() {
+        setTitle("Employee Information Form");
+        setLayout(null);
+        setSize(400, 300);
+
+        nameLabel = new Label("Name:");
+        nameLabel.setBounds(50, 50, 100, 20);
+
+        empIdLabel = new Label("Employee ID:");
+        empIdLabel.setBounds(50, 90, 100, 20);
+
+        deptLabel = new Label("Department:");
+        deptLabel.setBounds(50, 130, 100, 20);
+
+        resultLabel = new Label(""); // To display output
+        resultLabel.setBounds(50, 220, 300, 40);
+
+        nameField = new TextField();
+        nameField.setBounds(160, 50, 150, 20);
+
+        empIdField = new TextField();
+        empIdField.setBounds(160, 90, 150, 20);
+
+        deptField = new TextField();
+        deptField.setBounds(160, 130, 150, 20);
+
+        submitButton = new Button("Submit");
+        submitButton.setBounds(150, 170, 80, 30);
+        
+        submitButton.addActionListener(this);
+
+        add(nameLabel);
+        add(nameField);
+        add(empIdLabel);
+        add(empIdField);
+        add(deptLabel);
+        add(deptField);
+        add(submitButton);
+        add(resultLabel);
+
+   setVisible(true);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dispose();  // Close the window
+            }
+        });
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        // Get input values
+        String name = nameField.getText();
+        String empId = empIdField.getText();
+        String dept = deptField.getText();
+
+        resultLabel.setText("Name: " + name + ", ID: " + empId + ", Dept: " + dept);
+    }
+
+    public static void main(String[] args) {
+        new EmployeeForm();
+    }
+}
