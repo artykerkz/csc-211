@@ -1,0 +1,78 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class UserRegistration extends JFrame implements ActionListener {
+    JLabel nameLabel, emailLabel, passwordLabel, confirmPasswordLabel;
+
+    JTextField nameField, emailField;
+    JPasswordField passwordField, confirmPasswordField;
+
+    JButton submitButton, clearButton;
+
+    UserRegistration() {
+        setTitle("User Registration Form");
+        setSize(400, 300);
+        setLayout(new GridLayout(6, 2, 10, 10));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        nameLabel = new JLabel("Name:");
+        emailLabel = new JLabel("Email:");
+        passwordLabel = new JLabel("Password:");
+        confirmPasswordLabel = new JLabel("Confirm Password:");
+
+        nameField = new JTextField();
+        emailField = new JTextField();
+        passwordField = new JPasswordField();
+        confirmPasswordField = new JPasswordField();
+
+        submitButton = new JButton("Submit");
+        clearButton = new JButton("Clear");
+
+        submitButton.addActionListener(this);
+        clearButton.addActionListener(this);
+
+        add(nameLabel);
+        add(nameField);
+        add(emailLabel);
+        add(emailField);
+        add(passwordLabel);
+        add(passwordField);
+        add(confirmPasswordLabel);
+        add(confirmPasswordField);
+        add(submitButton);
+        add(clearButton);
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submitButton) {
+            String name = nameField.getText();
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+            String confirmPassword = new String(confirmPasswordField.getPassword());
+
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "All fields must be filled!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!password.equals(confirmPassword)) {
+                JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+
+                JOptionPane.showMessageDialog(this,
+                        "Registration Successful!\nName: " + name + "\nEmail: " + email,
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } 
+        else if (e.getSource() == clearButton) {
+            nameField.setText("");
+            emailField.setText("");
+            passwordField.setText("");
+            confirmPasswordField.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        new UserRegistration();
+    }
+}
