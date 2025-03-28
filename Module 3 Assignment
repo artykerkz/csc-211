@@ -1,0 +1,106 @@
+import java.util.Arrays;
+
+class Automobile implements Comparable<Automobile> {
+    protected int modelYear;
+    protected String brand;
+
+    public Automobile(int modelYear, String brand) {
+        this.modelYear = modelYear;
+        this.brand = brand;
+    }
+
+    public void honk() {
+        System.out.println(brand + " honks: Beep! Beep!");
+    }
+
+    @Override
+    public int compareTo(Automobile other) {
+        return Integer.compare(this.modelYear, other.modelYear);
+    }
+
+    @Override
+    public String toString() {
+        return modelYear + " " + brand;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Automobile that = (Automobile) obj;
+        return modelYear == that.modelYear && brand.equals(that.brand);
+    }
+}
+
+
+// Car Class
+class Car extends Automobile {
+    public Car(int modelYear, String brand) {
+        super(modelYear, brand);
+    }
+
+    public void accelerate() {
+        System.out.println(brand + " is accelerating...");
+    }
+
+    public void stop() {
+        System.out.println(brand + " has stopped.");
+    }
+}
+
+
+// SportsCar Class
+class SportsCar extends Automobile {
+    public SportsCar(int modelYear, String brand) {
+        super(modelYear, brand);
+    }
+
+    public void turboBoost() {
+        System.out.println(brand + " activates turbo boost!");
+    }
+}
+
+
+// JunkCar class
+class JunkCar extends Automobile {
+    public JunkCar(int modelYear, String brand) {
+        super(modelYear, brand);
+    }
+
+    public void reverse() {
+        System.out.println(brand + " is reversing slowly...");
+    }
+}
+
+
+
+// Tester Class
+public class Tester {
+    public static void main(String[] args) {
+        Automobile[] autos = new Automobile[3];
+
+        autos[0] = new Car(2022, "Toyota");
+        autos[1] = new SportsCar(2023, "Ferrari");
+        autos[2] = new JunkCar(2000, "Old Chevy");
+
+        for (Automobile auto : autos) {
+            System.out.println(auto);
+            auto.honk();
+
+            if (auto instanceof Car) {
+                ((Car) auto).accelerate();
+                ((Car) auto).stop();
+            } else if (auto instanceof SportsCar) {
+                ((SportsCar) auto).turboBoost();
+            } else if (auto instanceof JunkCar) {
+                ((JunkCar) auto).reverse();
+            }
+        }
+
+        Car car1 = new Car(2022, "Toyota");
+        Car car2 = new Car(2022, "Toyota");
+
+        System.out.println("Are cars equal? " + car1.equals(car2));
+        System.out.println("Comparison result: " + car1.compareTo(car2));
+    }
+}
