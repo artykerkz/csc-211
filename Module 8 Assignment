@@ -1,46 +1,83 @@
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
-   This program demonstrates the PassFailExam class.
+   This program demonstrates the PassFailExam class with a GUI interface.
 */
 
-public class PassFailExamDemo
-{
-   public static void main(String[] args)
-   {
-      int questions;     // Number of questions
-      int missed;        // Number of questions missed
-      double minPassing; // Minimum passing score
+public class PassFailExamDemo {
 
-      // Create a Scanner object for keyboard input.
-      Scanner keyboard = new Scanner(System.in);
+   public static void main(String[] args) {
+      // Create the frame (window)
+      JFrame frame = new JFrame("Pass/Fail Exam Calculator");
 
-      // Get the number of questions on the exam.
-      System.out.print("How many questions are on the exam? ");
-      questions = keyboard.nextInt();
+      // Create labels, text fields, and a button
+      JLabel questionsLabel = new JLabel("How many questions are on the exam?");
+      JLabel missedLabel = new JLabel("How many questions did the student miss?");
+      JLabel minPassingLabel = new JLabel("What is the minimum passing score?");
+      JLabel resultLabel = new JLabel(""); // To display results
 
-      // Get the number of questions missed.
-      System.out.print("How many questions did the student miss? ");
-      missed = keyboard.nextInt();
+      JTextField questionsField = new JTextField(10);
+      JTextField missedField = new JTextField(10);
+      JTextField minPassingField = new JTextField(10);
 
-      // Get the minimum passing score.
-      System.out.print("What is the minimum passing score? ");
-      minPassing = keyboard.nextDouble();
+      JButton calculateButton = new JButton("Calculate");
 
-      // Create a PassFailExam object.
-      PassFailExam exam = new PassFailExam(questions, missed, minPassing);
+      // Set up layout manager (using GridLayout for simplicity)
+      frame.setLayout(new GridLayout(5, 2, 10, 10));
 
-      // Display the points for each question.
-      System.out.println("Each question counts " +
-                 exam.getPointsEach() + " points.");
+      // Add components to the frame
+      frame.add(questionsLabel);
+      frame.add(questionsField);
+      frame.add(missedLabel);
+      frame.add(missedField);
+      frame.add(minPassingLabel);
+      frame.add(minPassingField);
+      frame.add(calculateButton);
+      frame.add(resultLabel);
 
-      // Display the exam score.
-      System.out.println("The exam score is " +
-                 exam.getScore());
+      // Set up button action
+      calculateButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            try {
+               // Get user input from text fields
+               int questions = Integer.parseInt(questionsField.getText());
+               int missed = Integer.parseInt(missedField.getText());
+               double minPassing = Double.parseDouble(minPassingField.getText());
 
-      // Display the exam grade.
-      System.out.println("The exam grade is " +
-                 exam.getGrade());
+               // Calculate points per question
+               double pointsEach = 100.0 / questions;
+
+               // Calculate the score
+               double score = pointsEach * (questions - missed);
+
+               // Determine the grade
+               char grade;
+               if (score >= minPassing) {
+                  grade = 'P'; // Pass
+               } else {
+                  grade = 'F'; // Fail
+               }
+
+               // Display the results
+               resultLabel.setText(String.format(
+                       "<html>Each question counts %.2f points.<br/>" +
+                               "The exam score is %.2f<br/>" +
+                               "The exam grade is %c</html>",
+                       pointsEach, score, grade));
+            } catch (NumberFormatException ex) {
+               // Handle invalid input (e.g., non-numeric input)
+               resultLabel.setText("Please enter valid numbers.");
+            }
+         }
+      });
+
+      // Set up the frame size and close operation
+      frame.setSize(400, 300);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setVisible(true);
    }
 }
-
