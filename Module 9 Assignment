@@ -1,0 +1,101 @@
+import java.util.ArrayList;
+import java.util.List;
+
+abstract class Song {
+    protected String title;
+    protected String artist;
+
+    public Song(String title, String artist) {
+        this.title = title;
+        this.artist = artist;
+    }
+
+    public abstract String play();
+}
+
+class PopSong extends Song {
+    public PopSong(String title, String artist) {
+        super(title, artist);
+    }
+
+    @Override
+    public String play() {
+        return "Now playing pop song: \"" + title + "\" by " + artist;
+    }
+}
+
+class RockSong extends Song {
+    public RockSong(String title, String artist) {
+        super(title, artist);
+    }
+
+    @Override
+    public String play() {
+        return "Playing rock song: \"" + title + "\" by " + artist;
+    }
+}
+
+class RnBSong extends Song {
+    public RnBSong(String title, String artist) {
+        super(title, artist);
+    }
+
+    @Override
+    public String play() {
+        return "Vibing to R&B track: \"" + title + "\" by " + artist;
+    }
+}
+
+class Playlist {
+    private String name;
+    private List<Song> songs;
+
+    public Playlist(String name) {
+        this.name = name;
+        this.songs = new ArrayList<>();
+    }
+
+    public void addSong(Song song) {
+        songs.add(song);
+    }
+
+    public void playAll() {
+        System.out.println("Playing playlist: " + name);
+        for (Song song : songs) {
+            System.out.println(song.play());
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class MusicPlayer {
+    private String playerName;
+
+    public MusicPlayer(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void playPlaylist(Playlist playlist) {
+        System.out.println(playerName + " is now playing the playlist: " + playlist.getName());
+        playlist.playAll();
+    }
+}
+
+public class MusicSystemMain {
+    public static void main(String[] args) {
+        Song pop = new PopSong("Cruel Summer", "Taylor Swift");
+        Song rock = new RockSong("Bohemian Rhapsody", "Queen");
+        Song rnb = new RnBSong("Good Days", "SZA");
+
+        Playlist myPlaylist = new Playlist("Chill Vibes");
+        myPlaylist.addSong(pop);
+        myPlaylist.addSong(rock);
+        myPlaylist.addSong(rnb);
+
+        MusicPlayer player = new MusicPlayer("SimplePlayer");
+        player.playPlaylist(myPlaylist);
+    }
+}
