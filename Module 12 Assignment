@@ -1,1 +1,44 @@
+// Recurisve Fibonacci Function
+public static int fibonacciRecursive(int n) {
+    if (n <= 1) return n;
+    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+}
+
+
+// Iterative Fibonacci Function
+public static int fibonacciIterative(int n) {
+    if (n <= 1) return n;
+    int a = 0, b = 1, temp;
+    for (int i = 2; i <= n; i++) {
+        temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return b;
+}
+
+// Decimal to binary conversion
+ // recursive
+public static String decimalToBinaryRecursive(int n) {
+    if (n == 0) return "0";
+    return decimalToBinaryRecursiveHelper(n);
+}
+
+private static String decimalToBinaryRecursiveHelper(int n) {
+    if (n == 0) return "";
+    return decimalToBinaryRecursiveHelper(n / 2) + (n % 2);
+}
+
+// iterative
+
+public static String decimalToBinaryIterative(int n) {
+    if (n == 0) return "0";
+    StringBuilder binary = new StringBuilder();
+    while (n > 0) {
+        binary.insert(0, n % 2);
+        n /= 2;
+    }
+    return binary.toString();
+}
+
 
